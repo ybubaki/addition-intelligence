@@ -1,0 +1,22 @@
+import streamlit as st
+from utils.dummy_data import DUMMY_DATA
+
+# This function renders the summary tab, displaying key company information including firmographics, financial statements, and ownership details.
+def view():
+
+    
+    # Define sections to display key company information
+    sections = [
+        ("Company Firmographics", DUMMY_DATA['firmographics']),
+        ("Financial Statement", DUMMY_DATA['financial_statement']),
+        ("Ownership Summary", DUMMY_DATA['ownership_summary'])
+    ]
+
+
+    # Loop through each section to display company information
+    for title, data in sections:
+            with st.container(border=True):
+                st.markdown(f"### {title}")
+                for key, value in data.items():
+                    st.write(f"**{key}:** {value}")
+     
