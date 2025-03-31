@@ -1,3 +1,5 @@
+import pandas as pd
+
 DUMMY_DATA = {"firmographics": {
     "Company Name": "Example Corp",
     "Industry": "Technology",
@@ -69,3 +71,39 @@ DUMMY_DATA = {"firmographics": {
     ]
 }
 }
+
+
+def get_firmographics_data():
+    df = pd.read_excel('platform-requirement.xlsx', sheet_name='Firmographic')
+
+    main_columns = df.columns
+    main_columns.to_list()
+
+    df.columns = df.iloc[0]
+    df = df[1:].reset_index(drop=True)
+    sub_columns = df.columns.to_list()
+
+    data = {}
+    counter = 4
+    count = 0
+    data['Firmographic'] = {}
+    firmographic = data['Firmographic']
+
+    name_index = ""
+    while count < counter:
+      ds = df.iloc[count]
+      index = 0
+      while index < len(main_columns):
+        if "Unnamed" not in main_columns[index]:
+          if name_index != "" and firmographic.get(name_index) == None:
+            firmographic[name_index] = []
+          if not len(name_index) == 0:
+            firmographic[name_index].append(temp_data)
+          name_index = main_columns[index]
+          temp_data = {}
+        temp_data[sub_columns[index]] = ds[sub_columns[index]]
+        index += 1
+      count += 1
+    return data['Firmographic']
+
+# get_firmographics_data()
