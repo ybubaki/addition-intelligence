@@ -1,4 +1,5 @@
 import pandas as pd
+import os
 
 DUMMY_DATA = {"firmographics": {
     "Company Name": "Example Corp",
@@ -74,7 +75,8 @@ DUMMY_DATA = {"firmographics": {
 
 
 def get_firmographics_data():
-    df = pd.read_excel(r'platform-requirement.xlsx', sheet_name='Firmographic')
+    root_dir = os.path.dirname(os.path.abspath(__file__)).split('utils')[0]
+    df = pd.read_excel(os.path.join(root_dir, 'platform-requirement.xlsx'), sheet_name='Firmographic')
 
     main_columns = df.columns
     main_columns.to_list()
