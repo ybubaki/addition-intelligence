@@ -74,7 +74,7 @@ DUMMY_DATA = {"firmographics": {
 
 
 def get_firmographics_data():
-    df = pd.read_excel('platform-requirement.xlsx', sheet_name='Firmographic')
+    df = pd.read_excel(r'platform-requirement.xlsx', sheet_name='Firmographic')
 
     main_columns = df.columns
     main_columns.to_list()
