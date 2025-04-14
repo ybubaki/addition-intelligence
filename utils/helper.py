@@ -15,3 +15,7 @@ def set_page_title(title: str) -> None:
 def create_tabs(tab_names: list[str]):
     """Creates Streamlit tabs and returns the selected tab."""
     return st.tabs(tab_names)
+
+def get_value_of_list_from_key(employees, key: str):
+    value = employees[-1][key] if employees[-1][key] != 0 else employees[-2][key]
+    return value
