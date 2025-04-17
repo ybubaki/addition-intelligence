@@ -1,6 +1,6 @@
 import requests
 
-_BASE_URL = "http://localhost:8000/"
+_BASE_URL = "https://addi-server.onrender.com/"
 
 def get_company_firmographics(ai_code_or_isin: str):
     try:
