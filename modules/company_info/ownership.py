@@ -1,5 +1,7 @@
 import streamlit as st
+import pandas as pd
 from services.api_data import get_company_ownership
+from utils.helper import ownership_type_transformer
 
 def view(ai_isin_code: str):
     # Get the ownership data of a company.
@@ -13,22 +15,25 @@ def view(ai_isin_code: str):
         return
     
     for owner in _data['ownerships']:
-        with st.expander(f'Year {owner['year']}'):
-            st.write(f'**Total Shares:** {owner['total_shares']}')
-            st.write(f'**Total Percentage:** {owner['total_percentage']}')
+        with st.expander(f'Year {owner["year"]}'):
+            st.write(f'**Total Shares:** {owner["total_shares"]}')
+            st.write(f'**Total Percentage:** {owner["total_percentage"]}')
 
             st.markdown(f'##### Beneficial Owners')
+            dt = {
+                'Name': [],
+                'Amount': [],
+                'Percentage': [],
+                'Country': [],
+                'Type': []
+            }
+
             for benefactor in owner['beneficial_owners']:
-                st.write(f'**Name:** {benefactor['name']}')
-
-                col1, col2 = st.columns(2)
-
-                with col1:
-                    st.write(f'**Amount:** {benefactor['amount']}')
-                    st.write(f'**Percentage:** {benefactor['percentage']}')
-                
-                with col2:
-                    st.write(f'**Country:** {benefactor['country']}')
-                    st.write(f'**Type:** {benefactor['type']}')
-                
-                st.markdown(f'<div style="padding: 0.5em"></div>', unsafe_allow_html=True)
+                dt['Name'].append(str(benefactor['name']))
+                dt['Amount'].append(benefactor['amount'])
+                dt['Percentage'].append(str(benefactor['percentage']))
+                dt['Country'].append("N/A" if str(benefactor['country']) == "None" else str(benefactor['country']))
+                dt['Type'].append(ownership_type_transformer(str(benefactor['type'])))
+            
+            df = pd.DataFrame(dt)
+            st.dataframe(df)

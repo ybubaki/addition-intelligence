@@ -17,8 +17,8 @@ def view(firmographics_data):
             st.write(f'**Country:** {firmographics_data["country"]}')
         with col2:
             st.write(f'**Sector:** {firmographics_data['sector']}')
-            st.write(f'**Number of employees:** {get_value_of_list_from_key(firmographics_data['employees'], 'count')}')
-            st.write(f'**Number of branches:** {get_value_of_list_from_key(firmographics_data['branches'], 'count')}')
+            st.write(f'**Number of employees({get_value_of_list_from_key(firmographics_data['employees'], 'year')}):** {get_value_of_list_from_key(firmographics_data['employees'], 'count')}')
+            st.write(f'**Number of branches({get_value_of_list_from_key(firmographics_data['branches'], 'year')}):** {get_value_of_list_from_key(firmographics_data['branches'], 'count')}')
 
     # Loop through each section to display company information
     for title, data in sections:
